@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mines Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #0d0d0d;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .buttons {
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background: #1abc9c;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      color: white;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 18px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h2>💣 Bombalar sonini tanlang</h2>
+  <div class="buttons">
+    <button onclick="selectBombs(2)">2</button>
+    <button onclick="selectBombs(3)">3</button>
+    <button onclick="selectBombs(5)">5</button>
+  </div>
+  <button onclick="getSignal()">📡 Get Signal</button>
+  <div id="signal" class="result"></div>
+
+  <script>
+    let bombCount = 3;
+    function selectBombs(count) {
+      bombCount = count;
+      document.getElementById('signal').textContent = `🔢 Tanlangan bomba soni: ${count}`;
+    }
+
+    function getSignal() {
+      document.getElementById('signal').textContent = '📡 Signallar olinmoqda...';
+      setTimeout(() => {
+        const cells = Array.from({ length: 25 }, (_, i) => i + 1);
+        const signal = [];
+        while (signal.length < bombCount) {
+          const i = Math.floor(Math.random() * cells.length);
+          signal.push(cells.splice(i, 1)[0]);
+        }
+        document.getElementById('signal').textContent =
+          '🟢 Signal topildi:\n' + signal.map(n => `⭐ ${n}`).join('\n');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
